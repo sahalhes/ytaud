@@ -75,7 +75,7 @@ function onPlayerReady(event) {
                 list: playlistId,
                 listType: 'playlist'
             });
-            player.setPlaybackQuality('small'); //Youtube api streams both video and audio, so just in case video data is used then let it use the least amount
+            // player.setPlaybackQuality('small'); //Youtube api streams both video and audio, so just in case video data is used then let it use the least amount
             console.log('Loaded playlist with ID:', playlistId);
         } else {
             console.log('Invalid YouTube URL or player is not ready');
@@ -96,6 +96,29 @@ function onPlayerReady(event) {
         if (playerReady) {
             player.previousVideo();
             console.log('Playing previous video in the playlist');
+        } else {
+            console.log('Player is not ready');
+            alert('Player is not ready');
+        }
+    });
+    document.getElementById('shuffleButton').addEventListener('click', function () {
+        var shuffleButton = this;
+        if (playerReady) {
+            player.setShuffle(true);
+            console.log('Shuffle is enabled');
+            shuffleButton.textContent = 'Shuffle is ON';
+        } else {
+            console.log('Player is not ready');
+            alert('Player is not ready');
+        }
+    });
+    
+    document.getElementById('loopButton').addEventListener('click', function () {
+        var loopButton = this;
+        if (playerReady) {
+            player.setLoop(true);
+            console.log('Loop is enabled');
+            loopButton.textContent = 'Loop is ON';
         } else {
             console.log('Player is not ready');
             alert('Player is not ready');
