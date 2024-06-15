@@ -75,7 +75,7 @@ function onPlayerReady(event) {
                 list: playlistId,
                 listType: 'playlist'
             });
-            // player.setPlaybackQuality('small'); //Youtube api streams both video and audio, so just in case video data is used then let it use the least amount
+            player.setPlaybackQuality('small'); //Youtube api streams both video and audio, so just in case video data is used then let it use the least amount
             console.log('Loaded playlist with ID:', playlistId);
         } else {
             console.log('Invalid YouTube URL or player is not ready');
