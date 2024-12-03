@@ -170,7 +170,6 @@ function getYouTubePlaylistId(url) {
 function getYouTubeVideoId(url) {
     var videoId = null;
 
-    // For Desktop URLs like https://www.youtube.com/watch?v=VIDEO_ID
     if (url.indexOf('youtube.com/watch?v=') > -1) {
         videoId = url.split('v=')[1];
         var ampersandPosition = videoId.indexOf('&');
