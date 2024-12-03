@@ -168,13 +168,28 @@ function getYouTubePlaylistId(url) {
 }
 
 function getYouTubeVideoId(url) {
-    var videoId = url.split('v=')[1];
-    if (videoId) {
+    var videoId = null;
+
+    // For Desktop URLs like https://www.youtube.com/watch?v=VIDEO_ID
+    if (url.indexOf('youtube.com/watch?v=') > -1) {
+        videoId = url.split('v=')[1];
         var ampersandPosition = videoId.indexOf('&');
         if (ampersandPosition != -1) {
             videoId = videoId.substring(0, ampersandPosition);
         }
-        return videoId;
     }
-    return null;
+    
+    else if (url.indexOf('youtu.be/') > -1) {
+        alert('Mobile YouTube links are blocked by YouTube api.Please try going to your browser settings and changing the "Desktop Site" option and try.');
+        return null;
+    }
+
+    else if (url.indexOf('m.youtube.com/v/') > -1) {
+        alert('Mobile YouTube links are blocked by YouTube api.Please try going to your browser settings and changing the "Desktop Site" option and try.');
+        return null;
+    }
+
+    return videoId ? videoId : null;
 }
+
+
