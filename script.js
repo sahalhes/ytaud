@@ -4,19 +4,21 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// Replace the 'player' div with an <iframe> and YouTube player.
 var player;
 var playerReady = false;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '0',
+        height: '0', // Adjust for initialization
         width: '0',
         videoId: '',
         playerVars: {
             'autoplay': 1,
             'controls': 0,
             'showinfo': 0,
+            'modestbranding': 1,
+            'iv_load_policy': 3,
+            'rel': 0,
             'enablejsapi': 1,
             'origin': window.location.origin
         },
@@ -35,8 +37,10 @@ function onPlayerReady(event) {
 
     // Event listeners for buttons
     document.getElementById('loadButton').addEventListener('click', function () {
+        console.log("Load button clicked");
         var videoUrl = document.getElementById('videoUrl').value;
         var videoId = getYouTubeVideoId(videoUrl);
+        console.log("Video ID: ", videoId);
         if (playerReady && videoId) {
             player.loadVideoById(videoId);
             console.log('Loaded video with ID:', videoId);
@@ -46,86 +50,25 @@ function onPlayerReady(event) {
         }
     });
 
-    document.getElementById('pauseButton').addEventListener('click', function () {
-        togglePausePlay();
-    });
-
-    document.getElementById('skipBackButton').addEventListener('click', function () {
-        skipTime(-10);
-    });
-
-    document.getElementById('skipForwardButton').addEventListener('click', function () {
-        skipTime(10);
-    });
-
-    document.getElementById('speed').addEventListener('change', function () {
-        if (playerReady) {
-            player.setPlaybackRate(parseFloat(this.value));
-            console.log('Playback rate changed to:', this.value);
-        } else {
-            console.log('Player is not ready');
-            alert('Player is not ready');
-        }
-    });
     document.getElementById('loadPlaylistButton').addEventListener('click', function () {
+        console.log("Load playlist button clicked");
         var playlistUrl = document.getElementById('playlistUrl').value;
         var playlistId = getYouTubePlaylistId(playlistUrl);
+        console.log("Playlist ID: ", playlistId);
         if (playerReady && playlistId) {
             player.loadPlaylist({
                 list: playlistId,
                 listType: 'playlist'
             });
-            player.setPlaybackQuality('small'); //Youtube api streams both video and audio, so just in case video data is used then let it use the least amount
             console.log('Loaded playlist with ID:', playlistId);
         } else {
             console.log('Invalid YouTube URL or player is not ready');
             alert('Invalid YouTube URL or player is not ready');
         }
     });
-    document.getElementById('nextVideoButton').addEventListener('click', function () {
-        if (playerReady) {
-            player.nextVideo();
-            console.log('Playing next video in the playlist');
-        } else {
-            console.log('Player is not ready');
-            alert('Player is not ready');
-        }
-    });
-    
-    document.getElementById('prevVideoButton').addEventListener('click', function () {
-        if (playerReady) {
-            player.previousVideo();
-            console.log('Playing previous video in the playlist');
-        } else {
-            console.log('Player is not ready');
-            alert('Player is not ready');
-        }
-    });
-    document.getElementById('shuffleButton').addEventListener('click', function () {
-        var shuffleButton = this;
-        if (playerReady) {
-            player.setShuffle(true);
-            console.log('Shuffle is enabled');
-            shuffleButton.textContent = 'Shuffle is ON';
-        } else {
-            console.log('Player is not ready');
-            alert('Player is not ready');
-        }
-    });
-    
-    document.getElementById('loopButton').addEventListener('click', function () {
-        var loopButton = this;
-        if (playerReady) {
-            player.setLoop(true);
-            console.log('Loop is enabled');
-            loopButton.textContent = 'Loop is ON';
-        } else {
-            console.log('Player is not ready');
-            alert('Player is not ready');
-        }
-    });
 }
 
+// Handle player errors
 function onPlayerError(event) {
     console.error('Error occurred in the YouTube player:', event.data);
     alert('An error occurred while trying to play the video. Please try again later or use a different video.');
@@ -158,36 +101,3 @@ function getYouTubeVideoId(url) {
     }
     return null;
 }
-
-function togglePausePlay() {
-    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-        console.log('Paused video');
-    } else if (player.getPlayerState() === YT.PlayerState.PAUSED) {
-        player.playVideo();
-        console.log('Resumed video');
-    }
-}
-
-function skipTime(seconds) {
-    player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
-    console.log(`Skipped ${seconds > 0 ? 'forward' : 'backward'} ${Math.abs(seconds)} seconds`);
-}
-
-// Keyboard controls for space (pause/play), right arrow (forward 10s), and left arrow (backward 10s)
-document.addEventListener('keydown', function (event) {
-    if (!playerReady) return;
-
-    switch (event.code) {
-        case 'Space':
-            event.preventDefault();
-            togglePausePlay();
-            break;
-        case 'ArrowRight':
-            skipTime(10);
-            break;
-        case 'ArrowLeft':
-            skipTime(-10);
-            break;
-    }
-});
