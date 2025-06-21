@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "YtAud",
   description: "Youtube Looper",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
