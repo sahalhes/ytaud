@@ -26,7 +26,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">YouTube Looper</h1>
+          <h1 className="text-3xl font-bold mb-2">YtAud - YouTube Looper</h1>
           <p className="text-slate-400">Set custom loop points for any YouTube video</p>
         </div>
 
@@ -37,7 +37,7 @@ export default function HomePage() {
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="Please paste YouTube URL or Video ID"
+              placeholder="Please paste YouTube URL here"
               className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
             />
             <Button onClick={handleLoad} className="bg-red-600 hover:bg-red-700">
@@ -78,6 +78,32 @@ export default function HomePage() {
           </>
         )}
       </div>
+        <footer className="mt-12 border-t border-slate-700 pt-6 text-center text-sm text-slate-500">
+          <div className="flex justify-center gap-6">
+            <a
+              href="https://buymeacoffee.com/sahalhes"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="buymecof.svg"
+                alt="buymeacoffee"
+                className="w-10 h-10 hover:opacity-100 opacity-70 transition-opacity"
+              />
+            </a>
+            <a
+              href="https://x.com/sahalhes"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="x.svg"
+                alt="Twitter"
+                className="w-10 h-10 hover:opacity-100 opacity-70 transition-opacity"
+              />
+            </a>
+          </div>
+        </footer>
     </div>
   )
 }
