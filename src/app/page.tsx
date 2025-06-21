@@ -17,7 +17,7 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isLooping, setIsLooping] = useState(false)
-  const playerRef = useRef<ReactPlayer>(null)
+  const playerRef = useRef<ReactPlayer>(null!)
 
   const handleLoad = () => setVideoUrl(url)
 

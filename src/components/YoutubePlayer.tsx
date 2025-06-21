@@ -25,7 +25,7 @@ export default function YouTubePlayer({
   onDurationChange,
   playerRef,
 }: YouTubePlayerProps) {
-  const intervalRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   // Handle time updates and looping
   const handleProgress = ({ playedSeconds }: { playedSeconds: number }) => {
@@ -103,7 +103,7 @@ export default function YouTubePlayer({
                 modestbranding: 1,
               },
             },
-          }}
+          } as any}
         />
       </div>
     </Card>
